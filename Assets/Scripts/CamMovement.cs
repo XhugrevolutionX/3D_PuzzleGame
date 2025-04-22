@@ -2,15 +2,18 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class CamMovement : MonoBehaviour
-{
-    [SerializeField] private InputManager inputs;
-    [SerializeField] private PlayerInput playerInput;
+{ 
+    [SerializeField] private GameObject player;
+    
+    private PlayerInput _playerInput;
+    private InputManager _inputs; 
+
     
     public float mouseSensY;
     public float mouseSensX;
     
     public float gamepadSensY;
-    public float gameSensX;
+    public float gamepadSensX;
 
     public Transform orientation;
 
@@ -23,6 +26,9 @@ public class CamMovement : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        
+        _playerInput = player.GetComponent<PlayerInput>();
+        _inputs = player.GetComponent<InputManager>();
     }
 
     // Update is called once per frame
@@ -31,15 +37,15 @@ public class CamMovement : MonoBehaviour
         float mouseX = 0f;
         float mouseY = 0f;
         
-        if (playerInput.currentControlScheme == "Keyboard&Mouse")
+        if (_playerInput.currentControlScheme == "Keyboard&Mouse")
         {
-            mouseX = inputs.LookInput.x * Time.deltaTime * mouseSensX;
-            mouseY = inputs.LookInput.y * Time.deltaTime * mouseSensY;
+            mouseX = _inputs.LookInput.x * Time.deltaTime * mouseSensX;
+            mouseY = _inputs.LookInput.y * Time.deltaTime * mouseSensY;
         }
-        else if (playerInput.currentControlScheme == "Gamepad")
+        else if (_playerInput.currentControlScheme == "Gamepad")
         {
-            mouseX = inputs.LookInput.x * Time.deltaTime * gameSensX;
-            mouseY = inputs.LookInput.y * Time.deltaTime * gamepadSensY;
+            mouseX = _inputs.LookInput.x * Time.deltaTime * gamepadSensX;
+            mouseY = _inputs.LookInput.y * Time.deltaTime * gamepadSensY;
         }
         
         _yRotation += mouseX;
@@ -51,5 +57,7 @@ public class CamMovement : MonoBehaviour
         transform.rotation = Quaternion.Euler(_xRotation, _yRotation, 0f);
         
         orientation.rotation = Quaternion.Euler(0f, _yRotation, 0f);
+        
+        player.transform.rotation = Quaternion.Euler(0f, _yRotation, 0f);
     }
 }

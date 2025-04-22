@@ -5,19 +5,20 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private float speed;
+    [SerializeField] private float jump;
+    [SerializeField] private Transform orientation;
+    [SerializeField] private LayerMask ground;
+    [SerializeField] private float groundDetectionRadius;
     
+    [SerializeField] private float gravityForce;
+    private float _downwardForce;
+    
+    private float _verticalMovement;
+    private float _horizontalMovement;
+
     private Rigidbody _rb;
     private Vector3 _move;
-    public float speed;
-    public float jump;
-    public Transform orientation;
-    public LayerMask ground;
-    
-    private float _vertical;
-    private float _horizontal;
-
-    public float downwardForce;
-    public float downwardMultiplier;
     
     private InputManager _input;
 
@@ -30,10 +31,10 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _horizontal = _input.MoveInput.x;
-        _vertical = _input.MoveInput.y;
+        _horizontalMovement = _input.MoveInput.x;
+        _verticalMovement = _input.MoveInput.y;
         
-        _move = orientation.right * _horizontal + orientation.forward * _vertical;
+        _move = orientation.right * _horizontalMovement + orientation.forward * _verticalMovement;
 
         if (_input.JumpInput && IsGrounded())
         {
@@ -42,12 +43,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (IsGrounded())
         {
-            downwardForce = 0;
+            _downwardForce = 0;
         }
         else
         {
-            downwardForce += Time.deltaTime * downwardMultiplier;
-            _rb.AddForce(-transform.up * downwardForce, ForceMode.Acceleration);
+            _downwardForce = gravityForce;
+            _rb.AddForce(-transform.up * _downwardForce, ForceMode.Acceleration);
         }
     }
 
@@ -65,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
     public bool IsGrounded()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 1.5f, ground))
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, groundDetectionRadius, ground))
         {
             return true;
         }
