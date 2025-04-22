@@ -21,11 +21,13 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _move;
     
     private InputManager _input;
+    private Animator _animator;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
         _input = GetComponent<InputManager>();
+        _animator = GetComponent<Animator>();
     }
     
     // Update is called once per frame
@@ -48,22 +50,24 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             _downwardForce = gravityForce;
-            _rb.AddForce(-transform.up * _downwardForce, ForceMode.Acceleration);
         }
+        
+        _animator.SetFloat("Speed", Mathf.Abs(new Vector2(_rb.linearVelocity.x, _rb.linearVelocity.z).magnitude));
     }
 
     void FixedUpdate()
     {
        _rb.AddForce(_move.normalized * speed, ForceMode.Acceleration);
+       _rb.AddForce(-transform.up * _downwardForce, ForceMode.Acceleration);
     }
 
-    public void Jumping()
+    private void Jumping()
     {
         _rb.linearVelocity = new Vector3(_rb.linearVelocity.x, 0, _rb.linearVelocity.z);
         _rb.AddForce(transform.up * jump, ForceMode.Impulse);
     }
 
-    public bool IsGrounded()
+    private bool IsGrounded()
     {
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.down, out hit, groundDetectionRadius, ground))
