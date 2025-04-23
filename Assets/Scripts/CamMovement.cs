@@ -9,12 +9,10 @@ public class CamMovement : MonoBehaviour
     private InputManager _inputs; 
 
     
-    public float mouseSensY;
-    public float mouseSensX;
+    public float mouseSens;
     
-    public float gamepadSensY;
-    public float gamepadSensX;
-
+    public float gamepadSens;
+    
     public Transform orientation;
 
     private float _xRotation;
@@ -39,13 +37,13 @@ public class CamMovement : MonoBehaviour
         
         if (_playerInput.currentControlScheme == "Keyboard&Mouse")
         {
-            mouseX = _inputs.LookInput.x * Time.deltaTime * mouseSensX;
-            mouseY = _inputs.LookInput.y * Time.deltaTime * mouseSensY;
+            mouseX = _inputs.LookInput.x * Time.deltaTime * mouseSens;
+            mouseY = _inputs.LookInput.y * Time.deltaTime * mouseSens;
         }
         else if (_playerInput.currentControlScheme == "Gamepad")
         {
-            mouseX = _inputs.LookInput.x * Time.deltaTime * gamepadSensX;
-            mouseY = _inputs.LookInput.y * Time.deltaTime * gamepadSensY;
+            mouseX = _inputs.LookInput.x * Time.deltaTime * gamepadSens;
+            mouseY = _inputs.LookInput.y * Time.deltaTime * gamepadSens;
         }
         
         _yRotation += mouseX;
