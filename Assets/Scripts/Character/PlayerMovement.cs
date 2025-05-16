@@ -64,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
     private void Jumping()
     {
         _rb.linearVelocity = new Vector3(_rb.linearVelocity.x, 0, _rb.linearVelocity.z);
-        _rb.AddForce(transform.up * jump, ForceMode.Impulse);
+        _rb.AddForce(transform.up * jump, ForceMode.VelocityChange);
     }
 
     private bool IsGrounded()

@@ -29,7 +29,16 @@
                     "id": "1d22e34d-f675-40e5-b476-5659c5261eb1",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Tap",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PickObject",
+                    "type": "Button",
+                    "id": "3b92b3f7-8e6f-42c2-8ded-755a864266af",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press",
                     "initialStateCheck": false
                 }
             ],
@@ -141,6 +150,28 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f421d0f8-f81d-4dfb-bb99-3c287a16e457",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "PickObject",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5db6e47d-6db3-4766-b961-538ac03c34bd",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "PickObject",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
